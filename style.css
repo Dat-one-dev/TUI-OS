@@ -1,19 +1,32 @@
 body {
     background-color: black;
     color: #00ff00;
-    font-family: monospace;
+    font-family: 'JetBrains Mono', monospace;
     margin: 0;
     padding: 20px;
 }
 
 h1 {
     color: #00ff00;
-    text-align: center;
+    text-align: left;
+    margin: 0;
+    padding: 0;
+    font-size: 18px;
 }
 
-p {
+#input {
+    background-color: black;
     color: #00ff00;
-    text-align: center;
+    border: none;
+    outline: none;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 16px;
+    width: 80%;
+}
+
+#output {
+    margin-top: 15px;
+    color: #00ff00;
 }
 
 .terminal {
