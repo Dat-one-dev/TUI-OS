@@ -31,8 +31,39 @@ function runFastfetch() {
     terminalPrint(art)
 }
 
+let asciiDigits = {
+    "0": [" ███ ", "█   █", "█   █", "█   █", " ███ "],
+    "1": ["  █  ", " ██  ", "  █  ", "  █  ", " ███ "],
+    "2": [" ███ ", "    █", " ███ ", "█    ", " ███ "],
+    "3": [" ███ ", "    █", " ███ ", "    █", " ███ "],
+    "4": ["█   █", "█   █", " ████", "    █", "    █"],
+    "5": [" ███ ", "█    ", " ███ ", "    █", " ███ "],
+    "6": [" ███ ", "█    ", " ███ ", "█   █", " ███ "],
+    "7": [" ███ ", "    █", "   █ ", "  █  ", " █   "],
+    "8": [" ███ ", "█   █", " ███ ", "█   █", " ███ "],
+    "9": [" ███ ", "█   █", " ███ ", "    █", " ███ "],
+    ":": ["     ", "  █  ", "     ", "  █  ", "     "]
+}
+
+function renderClock() {
+    let el = document.getElementById("clock-ascii")
+    if (!el) return
+    let now = new Date()
+    let t = now.toLocaleTimeString("en-GB", { hour12: false })
+    let lines = ["", "", "", "", ""]
+    for (let ch of t) {
+        let art = asciiDigits[ch] || ["     ", "     ", "     ", "     ", "     "]
+        for (let i = 0; i < 5; i++) {
+            lines[i] += art[i] + " "
+        }
+    }
+    el.textContent = lines.join("\n")
+}
+
 window.addEventListener("load", function() {
     setTimeout(runFastfetch, 300)
+    renderClock()
+    setInterval(renderClock, 1000)
 })
 
 input.addEventListener("keydown", function(e) {

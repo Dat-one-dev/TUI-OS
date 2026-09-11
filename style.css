@@ -49,13 +49,26 @@ h1 {
 
 #right-panel {
     display: grid;
-    grid-template-rows: 1fr 1fr;
+    grid-template-rows: 180px 1fr;
     gap: 10px;
 }
 
 #clock-panel {
-    background-color: blue;
+    background-color: black;
     border: 1px solid #00ff00;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#clock-ascii {
+    color: #00ff00;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    line-height: 1.1;
+    margin: 0;
+    white-space: pre;
+    text-align: center;
 }
 
 #idk-panel {
@@ -73,4 +86,9 @@ h1 {
     color: #00ff00;
     border: 1px solid #00ff00;
     padding: 15px;
+}
+
+#clock-ascii {
+    font-size: 9px;
+    letter-spacing: 0.5px;
 }
