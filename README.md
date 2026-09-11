@@ -9,11 +9,9 @@
 - hack club stardance challenge
 - its beginner misson lwk 2 hr 30 min
 - you gotta make your own os that runs in web
-- need to have multipl draggable windows and look like your own not guide
-- need 3 devlogs and 1 new feature that guide didnt list
-- no password so anyone can test ts
-- prizes are 50 stardust and webos sticker and unlocks webos 2
 - i made ts cause its tuff af and lwk fun
+
+**NOTE THIS IS CALLED TUI OS BUT ITS A WEB OS TRUST ME PLZ**
 
 ## its features
 
@@ -30,7 +28,7 @@
   - tree preety dir with adv features linux users know ts well
   - cd change dir command lwk cd docs cd .. cd /
   - fastfetch prints tui os ascii art with os dev and time same as welcome screen
-  - neofetch fetch also same
+  - neofetch is also same
   - date shows date
   - time shows time
   - view cat lets you view files in idk panel like readme md txt json and pngs
@@ -40,39 +38,17 @@
 - idk panel
   - file viewer
   - view readme md opens in there
-  - image preview for pngs lwk image png shows eiffel tower pic
+  - image preview for pngs lwk image png shows eiffel tower pic [although is random]
   - supports many files like secret txt log txt about txt todo txt notes txt
 - other shi
   - black bg green text lwk retro terminal vibe
-  - jetbrains mono font
-  - gridy layout
-
-## devlogs i did
-
-- devlog 1 41m 58s logged
-  - made black screen green text css
-  - added text input buffer
-  - added terminalPrint func to print array of strings
-  - added variable to store input of new line
-- devlog 2 1h 1m 36s logged
-  - added 3 panels terminal clock and idk
-  - added all commands help clear pwd dir tree cd fastfetch date time
-  - clock panel just clock
-  - idk panel gonna be file viewer
-- devlog 3 21m 25s logged
-  - added drag gable windows now u can drag windows lwk changing there positions
-  - fixed errors in tree and dir commands
-  - added view command to view files like txt md and pngs
-  - added many files for fun and ig ts is done
-  - time to lwk make readme vercel and ship it on github io
 
 ## ai disclosure
 
-- i used ai everywhere ngl but mainly for
-  - making ascii art for tui os and clock
-  - debugging view and tree commands
-  - added draggable windows lwk i didnt know how to do it so used ai there
-  - thats it rest i did myself
+- making ascii art for tui os and clock
+- debugging view and tree commands
+- added draggable windows lwk i didnt know how to do it so used ai there
+- thats it rest i did myself
 
 ## author
 
@@ -80,5 +56,4 @@
 - tech stack is just html css js no framework just vanilla shi
 - lwk just vibes and green text on black screen
 - github is Dat-One-Dev
-- stardust 236 on stardance
 - if you like ts give it a star lwk tuff af
