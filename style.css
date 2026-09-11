@@ -92,3 +92,44 @@ h1 {
     font-size: 9px;
     letter-spacing: 0.5px;
 }
+
+#left-panel, #clock-panel, #idk-panel {
+    cursor: move;
+    resize: both;
+    overflow: auto;
+    min-width: 120px;
+    min-height: 100px;
+}
+#left-panel:active, #clock-panel:active, #idk-panel:active {
+    opacity: 0.85;
+    z-index: 10;
+    border-color: #00ff00;
+    box-shadow: 0 0 12px rgba(0,255,0,0.4);
+}
+#layout.dragging {
+    opacity: 0.95;
+}
+
+#left-panel::after, #clock-panel::after, #idk-panel::after {
+    content: "⋮⋮";
+    position: absolute;
+    bottom: 4px;
+    right: 6px;
+    color: #00ff00;
+    font-size: 10px;
+    opacity: 0.5;
+    pointer-events: none;
+}
+#left-panel, #clock-panel, #idk-panel { position: relative; }
+
+#layout {
+    align-items: stretch;
+}
+#left-panel, #right-panel {
+    transition: all 0.2s ease;
+}
+
+#layout { gap: 8px; }
+#left-panel:hover, #clock-panel:hover, #idk-panel:hover {
+    border-color: #00ff88;
+}
