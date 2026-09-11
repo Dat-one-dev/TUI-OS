@@ -133,6 +133,47 @@ window.addEventListener("load", function() {
     setInterval(renderClock, 1000)
 })
 
+
+let fileContents = {
+    "docs/readme.md": "# TUI-OS docs readme",
+    "readme.md": "# TUI-OS\n\nWelcome to TUI-OS!\n\nThis is a retro terminal OS in browser.\n\nTry: help, fastfetch, tree, dir, cd",
+    "todo.txt": "- fix clock height\n- add draggable\n- add view command\n- polish IDK panel",
+    "notes.txt": "Guest notes:\n- TUI-OS is tuff af\n- Dat-One-Dev is the dev",
+    "config.json": "{\n  \"theme\": \"green\",\n  \"bg\": \"black\",\n  \"version\": \"0.4.1\"\n}",
+    "index.html": "<!DOCTYPE html> ... TUI OS html",
+    "style.css": "body { bg: black; color: green; }",
+    "script.js": "// terminal logic",
+    "file.zip": "[binary file - cannot display]",
+    "image.png": "[image: use view to preview]",
+    "secret.txt": "shh... you found the secret file!\nTUI-OS is watching you 👀",
+    "log.txt": "[2026-09-11] boot ok\n[2026-09-11] user guest logged in",
+    "about.txt": "TUI-OS by Dat-One-Dev (Kartik Patel)\nVersion 0.4.1 - tuff af"
+}
+function viewFile(name) {
+    let content = document.getElementById("idk-content")
+    let header = document.getElementById("idk-header")
+    if (!content) return
+    let clean = name.trim()
+    let key = clean.split("/").pop()
+    let isImage = key.endsWith(".png") || key.endsWith(".jpg") || key.endsWith(".jpeg") || key.endsWith(".gif") || key.endsWith(".webp")
+    if (isImage) {
+        let src = "https://via.placeholder.com/320x180/00ff00/000000?text=" + encodeURIComponent(key)
+        if (key === "image.png") src = "https://picsum.photos/320/180?random=1"
+        content.innerHTML = '<img src="' + src + '" style="max-width:100%; border:1px solid #00ff00; display:block; margin:0 auto;"><div style="text-align:center; margin-top:8px; color:#00ff00; font-size:10px;">' + key + ' — preview</div>'
+        if (header) header.textContent = "viewing: " + key + " (image)"
+        terminalPrint(["opened " + key + " in IDK panel (image preview)"])
+        return
+    }
+    if (fileContents[key]) {
+        content.textContent = fileContents[key]
+        if (header) header.textContent = "viewing: " + key
+        terminalPrint(["opened " + key + " in IDK panel"])
+    } else {
+        content.textContent = "view: cannot open '" + name + "': No such file"
+        terminalPrint(["view: cannot open '" + name + "': No such file"])
+    }
+}
+
 input.addEventListener("keydown", function(e) {
     if (e.key === "Enter") {
         let text = input.value
@@ -148,6 +189,10 @@ input.addEventListener("keydown", function(e) {
             }
             if (text === "clear") {
                 output.innerHTML = ""
+                let c = document.getElementById("idk-content")
+                if (c) c.textContent = "no file opened. try: view readme.md"
+                let h = document.getElementById("idk-header")
+                if (h) h.textContent = "IDK — file viewer"
             }
             if (text === "help") {
                 terminalPrint([
@@ -160,7 +205,8 @@ input.addEventListener("keydown", function(e) {
                     " pwd       - show current directory",
                     " tree      - show folder structure",
                     " dir/ls    - list directory contents",
-                    " cd [dir]  - change directory"
+                    " cd [dir]  - change directory",
+                    " view [file] - view file in IDK panel"
                 ])
             }
             if (text === "time") {
@@ -205,19 +251,66 @@ input.addEventListener("keydown", function(e) {
                 currentDir = "/home/guest"
                 terminalPrint([currentDir])
             }
-            if (text === "tree") {
-                terminalPrint([
-                    "/",
-                    "├── home/",
-                    "│   └── guest/",
-                    "│       ├── docs/",
-                    "│       ├── downloads/",
-                    "│       └── tui-os/",
-                    "├── etc/",
-                    "│   └── config/",
-                    "└── var/",
-                    "    └── log/"
-                ])
+            if (text.startsWith("view ") || text.startsWith("cat ")) {
+                let fname = text.split(" ")[1]
+                if (!fname) terminalPrint(["view: missing file name"])
+                else viewFile(fname)
+            } else if (text === "view" || text === "cat") {
+                terminalPrint(["view: missing file name"])
+            } else if (text === "tree" || text.startsWith("tree ")) {
+                let tpath = text.split(" ")[1] || currentDir
+                if (tpath === "/home/guest" || tpath === "." || tpath === currentDir) tpath = currentDir
+                if (tpath === "/home/guest") {
+                    terminalPrint([
+                        currentDir,
+                        "├── docs/",
+                        "│   ├── readme.md",
+                        "│   └── todo.txt",
+                        "├── downloads/",
+                        "│   ├── file.zip",
+                        "│   └── image.png",
+                        "├── tui-os/",
+                        "│   ├── index.html",
+                        "│   ├── style.css",
+                        "│   └── script.js",
+                        "├── notes.txt",
+                        "└── config.json"
+                    ])
+                } else if (tpath === "/home/guest/docs" || tpath === "docs") {
+                    terminalPrint([
+                        tpath,
+                        "├── readme.md",
+                        "└── todo.txt"
+                    ])
+                } else if (tpath === "/home/guest/downloads" || tpath === "downloads") {
+                    terminalPrint([
+                        tpath,
+                        "├── file.zip",
+                        "└── image.png"
+                    ])
+                } else if (tpath === "/home/guest/tui-os" || tpath === "tui-os") {
+                    terminalPrint([
+                        tpath,
+                        "├── index.html",
+                        "├── style.css",
+                        "└── script.js"
+                    ])
+                } else if (tpath === "/" || tpath === "/home") {
+                    terminalPrint([
+                        tpath,
+                        "├── home/",
+                        "│   └── guest/",
+                        "│       ├── docs/",
+                        "│       ├── downloads/",
+                        "│       └── tui-os/",
+                        "├── etc/",
+                        "│   └── config/",
+                        "└── var/",
+                        "    └── log/"
+                    ])
+                } else {
+                    terminalPrint(["tree: cannot access '" + tpath + "': No such directory"])
+                }
             }
             if (text === "dir" || text === "ls" || text.startsWith("dir ") || text.startsWith("ls ")) {
                 let parts = text.split(" ")
@@ -225,20 +318,26 @@ input.addEventListener("keydown", function(e) {
                 let fs = {
                     "/": ["home/", "etc/", "var/"],
                     "/home": ["guest/"],
-                    "/home/guest": ["docs/", "downloads/", "tui-os/", "notes.txt", "config.json"],
+                    "/home/guest": ["docs/", "downloads/", "tui-os/", "notes.txt", "config.json", "secret.txt", "log.txt", "about.txt"],
+                    "/home/guest/docs": ["readme.md", "todo.txt"],
+                    "/home/guest/downloads": ["file.zip", "image.png"],
+                    "/home/guest/tui-os": ["index.html", "style.css", "script.js"],
                     "home": ["guest/"],
                     "docs": ["readme.md", "todo.txt"],
                     "downloads": ["file.zip", "image.png"],
                     "tui-os": ["index.html", "style.css", "script.js"]
                 }
                 let key = path
+                if (path === ".") key = currentDir
+                let base = key.split("/").pop()
                 if (fs[key]) {
-                    terminalPrint(["Directory of " + path, ""].concat(fs[key]))
-                } else if (path === "/home/guest" || path === "." || path === currentDir) {
-                    // use currentDir fallback
-                    terminalPrint(["Directory of /home/guest", ""].concat(fs["/home/guest"]))
+                    terminalPrint(fs[key])
+                } else if (fs[base]) {
+                    terminalPrint(fs[base])
+                } else if (fs[currentDir]) {
+                    terminalPrint(fs[currentDir])
                 } else {
-                    terminalPrint(["dir: cannot access '" + path + "': No such directory"])
+                    terminalPrint(["dir: cannot access '" + path + "': No such file or directory"])
                 }
             }
             input.value = ""

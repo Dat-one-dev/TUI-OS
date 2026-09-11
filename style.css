@@ -133,3 +133,32 @@ h1 {
 #left-panel:hover, #clock-panel:hover, #idk-panel:hover {
     border-color: #00ff88;
 }
+
+#idk-panel {
+    flex-direction: column;
+    align-items: stretch;
+    justify-content: flex-start;
+    padding: 0;
+    overflow: hidden;
+}
+#idk-header {
+    background-color: #111;
+    color: #00ff00;
+    padding: 6px 10px;
+    font-size: 11px;
+    border-bottom: 1px solid #00ff00;
+}
+#idk-content {
+    color: #c5cddb;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    padding: 10px;
+    margin: 0;
+    white-space: pre-wrap;
+    overflow-y: auto;
+    flex: 1;
+}
+
+#idk-content::-webkit-scrollbar { width: 6px; }
+#idk-content::-webkit-scrollbar-thumb { background: #00ff00; border-radius: 99px; }
+#idk-header { letter-spacing: 0.5px; }
